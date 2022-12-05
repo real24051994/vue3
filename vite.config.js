@@ -1,5 +1,5 @@
 import { fileURLToPath, URL } from "node:url";
-import path from "path";
+import path from 'path'
 import ViteComponents from "unplugin-vue-components/vite";
 import {AntDesignVueResolver} from "unplugin-vue-components/resolvers";
 
@@ -13,7 +13,9 @@ export default defineConfig({
     }),
   ],
   resolve: {
-    alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
   },
   server: {
     port: "8080",
