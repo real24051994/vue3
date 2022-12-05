@@ -1,17 +1,31 @@
-import { fileURLToPath, URL } from 'node:url'
+import { fileURLToPath, URL } from "node:url";
+import path from "path";
+import ViteComponents from "unplugin-vue-components/vite";
+import {AntDesignVueResolver} from "unplugin-vue-components/resolvers";
 
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-
-// https://vitejs.dev/config/
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    ViteComponents({
+      resolvers: [AntDesignVueResolver()],
+    }),
+  ],
   resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
+    alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
   },
   server: {
-    port: '8080'
-  }
-})
+    port: "8080",
+  },
+  css: {
+    preprocessorOptions: {
+      less: {
+        javascriptEnabled: true,
+      },
+    },
+  },
+  commonjsOptions: {
+    esmExternals: true,
+  },
+});
